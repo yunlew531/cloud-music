@@ -1,0 +1,22 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+@layer base {
+  body {
+    @apply font-sans text-gray-700;
+  }
+  h1 {
+    @apply text-xl;
+  }
+  h2 {
+    @apply text-lg pl-3 py-2 pr-16;
+  }
+}
+
+@layer components {
+  .-z-10 {
+    z-index: -10;
+  }
+}
