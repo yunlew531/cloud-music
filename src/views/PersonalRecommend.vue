@@ -7,7 +7,7 @@
     </router-link>
     <ul class=" grid grid-cols-12 gap-5 mt-3.5">
       <li class=" col-span-3" v-for="song in recommendSongList.data" :key="song.id">
-        <router-link :to="`/songListDetail/${song.id}`">
+        <router-link :to="`/songListDetail/${song.id}/songList`">
           <span class="block bg-gray-600 h-56 rounded bg-cover bg-center bg-no-repeat"
             :style="{'background-image': `url('${song.picUrl}')`}"></span>
           <h4 class="mt-1.5">{{ song.name }}</h4>
@@ -34,18 +34,8 @@ export default {
       });
     }
 
-    function getSongListDetail() {
-      const id = 6754450319;
-      const api = `${process.env.VUE_APP_BASE_URL}/playlist/detail?id=${id}`;
-      axios.get(api).then((res) => {
-        console.log(res.data);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
     onMounted(() => {
       getRecommendSongList();
-      // getSongListDetail();
     });
 
     return {

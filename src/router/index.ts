@@ -28,6 +28,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'songListDetail/:id',
         component: () => import('@/views/SongListDetail.vue'),
+        children: [
+          {
+            path: 'songList',
+            name: 'SongList',
+            component: () => import('@/views/SongList.vue'),
+          },
+        ],
       },
     ],
   },
