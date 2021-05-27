@@ -57,7 +57,7 @@
       active-class="font-bold router-active">歌曲列表
     </router-link>
     <router-link class="ml-5" :to="`/songListDetail/${pageId}/comment`"
-      active-class="font-bold router-active">評論(31)
+      active-class="font-bold router-active">評論({{ songListData.playlist.commentCount }})
     </router-link>
     <router-link class="ml-5" :to="`/songListDetail/${pageId}/save`"
       active-class="font-bold router-active">收藏者
@@ -73,12 +73,12 @@ import {
   onMounted,
   computed,
 } from 'vue';
-import axios from 'axios';
 import { useRoute } from 'vue-router';
+import { apiGetSongListDetail } from '@/api';
 
 export default {
   setup() {
-    const pageId = ref(0);
+    const pageId = ref('');
     const route = useRoute();
     const songListData = reactive({ playlist: {} });
 
@@ -90,18 +90,14 @@ export default {
       return tagString;
     });
 
-    function getSongListDetail() {
+    const init = async () => {
       pageId.value = route.params.id;
-      const api = `${process.env.VUE_APP_BASE_URL}/playlist/detail?id=${pageId.value}`;
-      axios.get(api).then((res) => {
-        songListData.playlist = res.data.playlist;
-        console.log(songListData);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
+      const { data } = await apiGetSongListDetail(pageId.value);
+      songListData.playlist = data.playlist;
+      console.log(songListData.playlist);
+    };
     onMounted(() => {
-      getSongListDetail();
+      init();
     });
     return {
       pageId,

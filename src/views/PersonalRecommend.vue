@@ -19,23 +19,19 @@
 
 <script>
 import { reactive, onMounted } from 'vue';
-import axios from 'axios';
+import { apiGetRecommendSongList } from '@/api';
 
 export default {
   setup() {
     const recommendSongList = reactive({ data: [] });
 
-    function getRecommendSongList() {
-      axios.get(`${process.env.VUE_APP_BASE_URL}/personalized`).then((res) => {
-        recommendSongList.data = res.data.result;
-        // console.log(recommendSongList.data);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
+    const init = async () => {
+      const { data } = await apiGetRecommendSongList();
+      recommendSongList.data = data.result;
+    };
 
     onMounted(() => {
-      getRecommendSongList();
+      init();
     });
 
     return {
