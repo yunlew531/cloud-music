@@ -12,10 +12,10 @@
             </tr>
           </thead>
         <tbody class="text-gray-700">
-          <tr>
-            <td class="w-1/3 text-left py-3 px-4">小星星</td>
-            <td class="w-1/3 text-left py-3 px-4">Smith</td>
-            <td class="text-left py-3 px-4">慢慢懂</td>
+          <tr v-for="song in tracks.data" :key="song.id">
+            <td class="w-1/3 text-left py-3 px-4">{{ song.name }}</td>
+            <td class="w-1/3 text-left py-3 px-4">{{ song.ar[0].name }}</td>
+            <td class="text-left py-3 px-4">{{ song.al.name }}</td>
             <td class="text-left py-3 px-4">05:30</td>
           </tr>
         </tbody>
@@ -26,6 +26,23 @@
 </template>
 
 <script>
+import { watch, reactive } from 'vue';
+
+export default {
+  props: {
+    songListData: Object,
+  },
+  setup(props) {
+    const tracks = reactive({ data: [] });
+    watch(props.songListData, () => {
+      tracks.data = props.songListData.playlist.tracks;
+      console.log(tracks.data);
+    }, { deep: true });
+    return {
+      tracks,
+    };
+  },
+};
 </script>
 
 <style>

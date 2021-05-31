@@ -62,7 +62,7 @@
     <router-link class="ml-5" :to="`/songListDetail/${pageId}/save`"
       active-class="font-bold router-active">收藏者
     </router-link>
-    <router-view></router-view>
+    <router-view :songListData="songListData"></router-view>
   </section>
 </template>
 
@@ -94,7 +94,7 @@ export default {
       pageId.value = route.params.id;
       const { data } = await apiGetSongListDetail(pageId.value);
       songListData.playlist = data.playlist;
-      console.log(songListData.playlist);
+      // console.log(songListData.playlist);
     };
     onMounted(() => {
       init();
